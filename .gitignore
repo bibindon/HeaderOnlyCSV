@@ -7,3 +7,6 @@
 /headeronlycsv/Debug
 /headeronlycsv/headeronlycsv/Debug
 *.user
+/Sample/.vs
+/Sample/Debug
+/Sample/Sample/Debug
