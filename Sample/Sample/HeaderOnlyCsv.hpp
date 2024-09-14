@@ -69,6 +69,23 @@ public:
         return csvData;
     }
 
+    static void Write(const std::string& filepath, const std::vector<std::vector<std::string> >& csvData)
+    {
+        std::ofstream ofs(filepath);
+        for (std::size_t i = 0; i < csvData.size(); ++i)
+        {
+            for (std::size_t j = 0; j < csvData.at(i).size(); ++j)
+            {
+                ofs << csvData.at(i).at(j);
+                if (j != csvData.at(i).size() - 1)
+                {
+                    ofs << ",";
+                }
+            }
+            ofs << "\n";
+        }
+    }
+
 private:
     csv();
 
