@@ -20,6 +20,7 @@ public:
             return csvData;
         }
 
+        // 「"」記号で囲まれているとセル内改行ができることに注意
         std::ifstream ifs(filepath);
         std::string buffComma;
         bool doubleQuoteMode = false;
@@ -68,6 +69,23 @@ public:
         return csvData;
     }
 
+    static void Write(const std::string& filepath, const std::vector<std::vector<std::string> >& csvData)
+    {
+        std::ofstream ofs(filepath);
+        for (std::size_t i = 0; i < csvData.size(); ++i)
+        {
+            for (std::size_t j = 0; j < csvData.at(i).size(); ++j)
+            {
+                ofs << csvData.at(i).at(j);
+                if (j != csvData.at(i).size() - 1)
+                {
+                    ofs << ",";
+                }
+            }
+            ofs << "\n";
+        }
+    }
+
 private:
     csv();
 
@@ -96,7 +114,5 @@ private:
         rtrim(s);
         ltrim(s);
     }
-
-//    std::vector<std::vector<std::string> > m_csvData;
 };
 
