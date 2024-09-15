@@ -69,6 +69,58 @@ public:
         return csvData;
     }
 
+    static std::vector<std::vector<std::string> > ReadFromString(const std::string& text)
+    {
+        std::vector<std::vector<std::string> > csvData;
+
+        // 「"」記号で囲まれているとセル内改行ができることに注意
+        std::string buffComma;
+        bool doubleQuoteMode = false;
+        std::vector<std::string> work;
+        std::string::const_iterator itBegin(text.cbegin());
+        std::string::const_iterator itEnd(text.cend());;
+
+        for (; itBegin != itEnd; itBegin++)
+        {
+            if (*itBegin != ',' && *itBegin != '\n')
+            {
+                buffComma += *itBegin;
+                if (*itBegin == '"')
+                {
+                    if (doubleQuoteMode == false)
+                    {
+                        doubleQuoteMode = true;
+                    }
+                    else
+                    {
+                        doubleQuoteMode = false;
+                    }
+                }
+            }
+            else if (*itBegin == ',')
+            {
+                work.push_back(buffComma);
+                buffComma.clear();
+            }
+            else if (*itBegin == '\n')
+            {
+                if (doubleQuoteMode == false)
+                {
+                    work.push_back(buffComma);
+                    buffComma.clear();
+                    csvData.push_back(work);
+                    work.clear();
+                }
+                else
+                {
+                    buffComma += *itBegin;
+                }
+            }
+        }
+
+        return csvData;
+    }
+
     static void Write(const std::string& filepath, const std::vector<std::vector<std::string> >& csvData)
     {
         std::ofstream ofs(filepath);
