@@ -20,12 +20,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test2.csv" />
-    <None Include="test.csv" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\HeaderOnlyCsvUtf8.hpp">
+    <ClInclude Include="..\..\HeaderOnlyCsvUnicode.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test2.csv" />
+    <None Include="test.csv" />
   </ItemGroup>
 </Project>
