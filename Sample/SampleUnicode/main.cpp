@@ -1,55 +1,31 @@
-#include <iostream>
-#include "../../HeaderOnlyCsvUtf8.hpp"
+ï»¿#include <iostream>
+#include "../../HeaderOnlyCsvUnicode.hpp"
 #include <cassert>
 
 int main()
 {
     {
-        std::vector<std::vector<std::string>> csvData = csv::Read("test.csv");
-        csv::Write("test.out.csv", csvData);
+        std::vector<std::vector<std::wstring>> csvData = csv::Read(L"test.csv");
+        assert(!csvData.empty());
+        csv::Write(L"test.out.csv", csvData);
     }
 
-    // ƒJƒ“ƒ}u,v‚ªŠÜ‚Ü‚ê‚Ä‚¢‚écsvƒtƒ@ƒCƒ‹
+    // ã‚«ãƒ³ãƒã€Œ,ã€ãŒå«ã¾ã‚Œã¦ã„ã‚‹csvãƒ•ã‚¡ã‚¤ãƒ«
     {
-        std::vector<std::vector<std::string>> csvData = csv::Read("test2.csv");
+        std::vector<std::vector<std::wstring>> csvData = csv::Read(L"test2.csv");
         assert(csvData.size() == 2);
         assert(csvData.at(0).size() == 4);
         assert(csvData.at(1).size() == 4);
 
-        assert(csvData.at(0).at(2) == "\"c,d\"");
-        assert(csvData.at(1).at(1) == "\"test,test\"");
+        assert(csvData.at(0).at(2) == L"\"c,d\"");
+        assert(csvData.at(1).at(1) == L"\"test,test\"");
 
-        csv::Write("test2.out.csv", csvData);
+        csv::Write(L"test2.out.csv", csvData);
     }
 
     {
-        std::vector<std::vector<std::string>> csvData = csv::ReadFromString("a,b,c\nd,e,f\ng,h,i");
+        std::vector<std::vector<std::wstring>> csvData = csv::ReadFromString(L"a,b,c\nd,e,f\ng,h,i");
         std::size_t s =csvData.size();
-    }
-    // ‚¨‚Ü‚¯
-    // ƒV[ƒU[ˆÃ†
-    {
-        std::string str("‚ ‚¢‚¤‚¦‚¨");
-        const char* sz = str.c_str();
-        std::size_t _size = str.size();
-        char* work = nullptr;
-        work = new char[_size+1];
-        strcpy_s(work, _size+1, str.c_str());
-
-        // ˆÃ†‰»
-        for (int i = 0; i < _size + 1; ++i)
-        {
-            work[i] = work[i]+10;
-        }
-        std::string str2(work);
-        // •¡‡‰»
-        for (int i = 0; i < _size + 1; ++i)
-        {
-            work[i] = work[i]-10;
-        }
-        std::string str3(work);
-
-        delete[] work;
     }
 
     return 0;
